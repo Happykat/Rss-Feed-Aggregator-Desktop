@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 import javafx.collections.ObservableList;
 
 import rss.manager.model.Feed;
+import rss.manager.model.Item;
 import rss.manager.model.SimpleFeed;
 import rss.manager.view.AddFeedViewController;
 import rss.manager.view.FeedViewController;
@@ -23,19 +24,33 @@ public class MainApp extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
     private ObservableList<Feed> feedList = FXCollections.observableArrayList();
+    private ObservableList<Item> itemList = FXCollections.observableArrayList();
 
     public ObservableList<Feed> getFeedList() {
         return (this.feedList);
+    }
+    public ObservableList<Item> getItemList() {
+        return (this.itemList);
+    }
+
+    public MainApp(){
+        this.feedList.add(new Feed("url1", "name1", "more then 10 characters", "title1"));
+        this.feedList.add(new Feed("url2", "name2", "desc2", "title2"));
+        this.feedList.add(new Feed("url3", "name3", "desc3", "title3"));
+        this.feedList.add(new Feed("url4", "name4", "desc4", "title4"));
+
+        this.itemList.add(new Item(
+                "Tue, 17 Jan 2017 15:30:00 +0100",
+                "http://www.developpez.com/actu/112593/La-fondation-Raspberry-Pi-lance-le-Compute-Module-3-la-derniere-version-du-module-Raspberry-Pi-destine-a-etre-integre-dans-d-autres-produits/",
+                "La fondation Raspberry Pi lance le Compute Module 3",
+                "La fondation Raspberry Pi lance le Compute Module 3, la dernière version du module Raspberry Pi destiné à être intégré dans d'autres produits"));
+
     }
 
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("RSS Manager");
-        this.feedList.add(new Feed("url1", "name1", "more then 10 characters", "title1"));
-        this.feedList.add(new Feed("url2", "name2", "desc2", "title2"));
-        this.feedList.add(new Feed("url3", "name3", "desc3", "title3"));
-        this.feedList.add(new Feed("url4", "name4", "desc4", "title4"));
+        this.primaryStage.setTitle("RSS Feed Aggregator");
 
         initRootLayout();
 

@@ -8,23 +8,20 @@ import javafx.scene.control.TableView;
 
 import rss.manager.model.Feed;
 import rss.manager.MainApp;
+import rss.manager.model.Item;
 import rss.manager.model.SimpleFeed;
 
 public class FeedViewController {
     @FXML
     private TableView<Feed> feedTable;
     @FXML
-    private TableColumn<Feed, String> descColumn;
+    private TableView<Item> itemTable;
+
     @FXML
     private TableColumn<Feed, String> nameColumn;
     @FXML
-    private Label nameLabel;
-    @FXML
-    private Label descLabel;
-    @FXML
-    private Label titleLabel;
-    @FXML
-    private Label linkLabel;
+    private TableColumn<Item, String> itemColumn;
+
 
     private MainApp mainApp;
 
@@ -32,32 +29,23 @@ public class FeedViewController {
 
     }
 
-    private void showFeedDetail(Feed feed) {
-        if (feed != null) {
-            nameLabel.setText(feed.getName());
-            titleLabel.setText(feed.getTitle());
-            descLabel.setText(feed.getDecription());
-            linkLabel.setText(feed.getLink());
-        } else {
-            nameLabel.setText("");
-            titleLabel.setText("");
-            descLabel.setText("");
-            linkLabel.setText("");
+    private void showItems(Feed feed) {
+        // TO DO: Request to get items' feed.
+
+        if (feed != null){
+            itemTable.setItems(mainApp.getItemList());
+            itemColumn.setCellValueFactory(cellData -> cellData.getValue().titleProperty());
         }
     }
 
     @FXML
     private void initialize() {
-        // Initialize the person table with the two columns.
-        descColumn.setCellValueFactory(cellData -> cellData.getValue().shortDescriptionProperty());
+        // Initialize the feed table with the column.
         nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
-
-        // Clear person details.
-        showFeedDetail(null);
 
         // Listen for selection changes and show the person details when changed.
         feedTable.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> showFeedDetail(newValue));
+                (observable, oldValue, newValue) -> showItems(newValue));
     }
 
     @FXML
@@ -65,6 +53,7 @@ public class FeedViewController {
         int selectedIndex = feedTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
             feedTable.getItems().remove(selectedIndex);
+            itemTable.getItems().removeAll();
         } else {
             // Nothing selected.
             Alert alert = new Alert(Alert.AlertType.WARNING);
