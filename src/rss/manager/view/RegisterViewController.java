@@ -2,16 +2,16 @@ package rss.manager.view;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import rss.manager.MainApp;
 
-public class LoginViewController {
+public class RegisterViewController {
     @FXML
-    private TextField loginField;
+    private TextField pseudo;
     @FXML
-    private TextField passwordField;
+    private TextField password;
+    @FXML
+    private TextField passwordConfirmation;
 
     private MainApp mainApp;
 
@@ -24,33 +24,32 @@ public class LoginViewController {
     }
 
     @FXML
-    private void login() {
-        if (isInputValid()) {
-            mainApp.showFeedView();
-        }
-    }
-
-    @FXML
     private void register() {
-        mainApp.showRegisterView();
+        if (isInputValid()) {
+            mainApp.showLoginView();
+        }
     }
 
     private boolean isInputValid() {
         String errorMessage = "";
-        String name = loginField.getText();
-        String link = passwordField.getText();
+        String loginText = pseudo.getText();
+        String passwordText = password.getText();
+        String passwordConfirmationText = passwordConfirmation.getText();
 
-        if (name == null || name.length() == 0) {
+        if (loginText == null || loginText.length() == 0) {
             errorMessage += "Invalid login\n";
         }
-        if (link == null || link.length() == 0) {
+        if (passwordText == null || passwordText.length() == 0) {
             errorMessage += "Invalid password\n";
+        }
+        if (!passwordText.equals(passwordConfirmationText)) {
+            errorMessage += "Password does not match\n";
         }
 
         if (errorMessage.length() == 0) {
             return true;
         } else {
-            Alert alert = new Alert(AlertType.ERROR);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Invalid Fields");
             alert.setHeaderText("Please correct invalid fields");
             alert.setContentText(errorMessage);

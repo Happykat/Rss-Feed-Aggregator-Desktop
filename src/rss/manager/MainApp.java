@@ -18,6 +18,7 @@ import rss.manager.model.SimpleFeed;
 import rss.manager.view.AddFeedViewController;
 import rss.manager.view.FeedViewController;
 import rss.manager.view.LoginViewController;
+import rss.manager.view.RegisterViewController;
 
 public class MainApp extends Application {
 
@@ -85,6 +86,21 @@ public class MainApp extends Application {
             rootLayout.setCenter(loginView);
 
             LoginViewController controller = loader.getController();
+            controller.setMainApp(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showRegisterView() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(MainApp.class.getResource("view/RegisterView.fxml"));
+            AnchorPane registerView = (AnchorPane) loader.load();
+
+            rootLayout.setCenter(registerView);
+
+            RegisterViewController controller = loader.getController();
             controller.setMainApp(this);
         } catch (IOException e) {
             e.printStackTrace();
