@@ -1,22 +1,20 @@
-package rss.manager.view;
+package rss.manager.controller;
 
 
+import com.hfabre.rss.Feed;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import rss.manager.model.request.SimpleFeed;
+//import rss.manager.model.request.SimpleFeed;
 
 public class AddFeedViewController {
-
-    @FXML
-    private TextField nameField;
     @FXML
     private TextField linkField;
 
     private Stage dialogStage;
-    private SimpleFeed feed;
+    private Feed feed_;
     private boolean okClicked = false;
 
     /**
@@ -51,8 +49,7 @@ public class AddFeedViewController {
     @FXML
     private void handleOk() {
         if (isInputValid()) {
-            feed.setName(nameField.getText());
-            feed.setLink(linkField.getText());
+            feed_.setUrl(linkField.getText());
 
             okClicked = true;
             dialogStage.close();
@@ -74,12 +71,8 @@ public class AddFeedViewController {
      */
     private boolean isInputValid() {
         String errorMessage = "";
-        String name = nameField.getText();
         String link = linkField.getText();
 
-        if (name == null || name.length() == 0) {
-            errorMessage += "Invalid name\n";
-        }
         if (link == null || link.length() == 0) {
             errorMessage += "Invalid link\n";
         }
@@ -99,7 +92,7 @@ public class AddFeedViewController {
         }
     }
 
-    public void setFeed(SimpleFeed feed) {
-        this.feed = feed;
+    public void setFeed(Feed feed) {
+        feed_ = feed;
     }
 }
