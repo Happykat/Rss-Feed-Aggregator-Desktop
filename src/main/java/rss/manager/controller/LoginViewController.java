@@ -29,15 +29,11 @@ public class LoginViewController {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(MainApp.FILENAME))) {
             db_ = (ObjectDB) ois.readObject();
             String pwdDecoded = new String(Base64.decodeBase64((String)db_.getPair().getSecond()));
-            System.out.println(pwdDecoded);
             user_ = new User((String) db_.getPair().getFirst(), pwdDecoded);
             loginField.setText((String) db_.getPair().getFirst());
             passwordField.setText(pwdDecoded);
-            System.out.println("--From file--");
-            System.out.println("Username:"  + db_.getPair().getFirst() + '.');
-            System.out.println("Password: " + pwdDecoded + '.');
         } catch (Exception e) {
-            System.out.println("File is empty.");
+            e.printStackTrace();
         }
 
     }
@@ -50,15 +46,11 @@ public class LoginViewController {
     private void login() {
         if (user_ == null || !Objects.equals(loginField.getText(), user_.getUsername()) ||
                 !Objects.equals(passwordField.getText(), user_.getPassword())) {
-            System.out.println("--From textfields--");
-            System.out.println("Username:" + loginField.getText()+'.');
-            System.out.println("password:" + passwordField.getText()+'.');
             user_ = new User(loginField.getText(), passwordField.getText());
         }
 
         try {
             user_.login();
-            System.out.println(user_.getToken());
             mainApp.setUser(user_);
             mainApp.showFeedView();
         } catch (Exception e) {

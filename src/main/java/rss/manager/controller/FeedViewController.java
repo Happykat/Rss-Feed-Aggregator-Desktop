@@ -37,11 +37,8 @@ public class FeedViewController {
     }
 
     private void showItems(Feed feed) {
-        System.out.println("SHOW ITEMS FROM FEED");
             if (feed != null) {
                 try {
-                    System.out.println("Feed ID: " + feed.getId());
-                    System.out.println("Token: " + mainApp.getUser().getToken());
                     articleList_ = FXCollections.observableArrayList(Feed.find(feed.getId(), mainApp.getUser().getToken()));
 
                     for (Article article : articleList_) {
@@ -65,8 +62,6 @@ public class FeedViewController {
     }
 
     private void showArticleText(Article article) {
-        System.out.println("SHOW ARTICLE TEXT");
-
         if (article != null) {
 
             if (!article.isRead()) { // Make article as read
@@ -182,9 +177,6 @@ public class FeedViewController {
         if (okClicked) {
             try {
                 feed = Feed.add(feed.getUrl(), mainApp.getUser().getToken());
-                System.out.println("--New Feed--");
-                System.out.println("Url: " + feed.getUrl());
-                System.out.println("Title: " + feed.getTitle());
                 feedList_.add(feed);
             } catch (Exception e) {
                 e.printStackTrace();

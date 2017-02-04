@@ -1,13 +1,11 @@
 package rss.manager.controller;
 
-
 import com.hfabre.rss.Feed;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-//import rss.manager.model.request.SimpleFeed;
 
 public class AddFeedViewController {
     @FXML
